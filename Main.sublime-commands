@@ -1,0 +1,7 @@
+[
+	{
+		"id": "rust-share",
+		"caption": "Share Rust File",
+		"command": "rust_share"
+	}
+]

@@ -1,6 +1,5 @@
 
-import sublime, sublime_plugin
-import json
+import sublime, sublime_plugin, threading, json
 
 ST3 = int(sublime.version()) >= 3000
 if ST3:
@@ -14,8 +13,12 @@ else:
 class RustShareCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		everything = self.view.substr(sublime.Region(0, self.view.size()))
-		url = "https://play.rust-lang.org/?code=" + quote_plus(everything)
+		self.everything = self.view.substr(sublime.Region(0, self.view.size()))
+		t = threading.Thread(target = self.connectToAPI)
+		t.start()
+
+	def connectToAPI(self):
+		url = "https://play.rust-lang.org/?code=" + quote_plus(self.everything)
 		shortURL = "http://is.gd/create.php?format=json&url=" + quote_plus(url)
 		contents = urlopen(shortURL).read()
 		shortened = json.loads(contents.decode("utf-8"))["shorturl"]

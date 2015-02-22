@@ -1,0 +1,4 @@
+{
+	// Whether to show the dialogue window after sharing a link.
+	"show dialogue": true
+}

@@ -21,7 +21,8 @@ class RustShareCommand(sublime_plugin.TextCommand):
 		shortened = json.loads(contents.decode("utf-8"))["shorturl"]
 		sublime.set_clipboard(shortened)
 
-		if ST3:
+		settings = sublime.load_settings("RustShare.sublime-settings")
+		if ST3 and settings.get("show dialogue", True):
 			self.displayOutput(shortened)
 
 	def displayOutput(self, link):
